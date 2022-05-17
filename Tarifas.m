@@ -1,169 +1,28 @@
-%% TD 2.0
-r = webread('https://holydayapi.herokuapp.com/holidays/city_code/50297/year/2021');
-
-
-festivos = arrayfun(@(i) datetime(r(i).day,'Format','dd/MM/yyyy'),1:length(r))';
-
-dini = datetime('2021-01-01 00:00:00');
-dend = datetime('2021-12-31 00:00:00');
-
-alldays = dini:dend;
-
-ndays = length(alldays);
-
-%%
-
-%%
-
-TD20_Potencia = zeros(24,ndays);
-
-%% Potencia 
-% 1 - Punta 
-% 2 - Valle
+clear
 %
-for id = 1:ndays
-   for in = 1:24
-       fin_de_semana = ismember(weekday(alldays(id)),[7 1]);
-       festivo = ismember(alldays(id),festivos);
-       if (fin_de_semana ||festivo)
-           TD20_Potencia(in,id) = 2;
-       else
-           if in < 8
-              TD20_Potencia(in,id) = 2;
-           else
-              TD20_Potencia(in,id) = 1;
-           end
-       end 
-   end
-end
-
-
-
-%% Energia 
-% 1- Punta 
-% 2 - Lanno 
-% 3 - Valle 
-
-TD20_Energia = zeros(24,ndays);
-
+ndays = 365;
 %
-for id = 1:ndays
-   for in = 1:24
-       fin_de_semana = ismember(weekday(alldays(id)),[7 1]);
-       festivo = ismember(alldays(id),festivos);
-       if (fin_de_semana ||festivo)
-           TD20_Energia(in,id) = 3;
-       else
-           if in <= 8
-              TD20_Energia(in,id) = 3;
-           else
-              % Lano 
-              if ismember(in,[9 10 15:18 23 24])
-                  TD20_Energia(in,id) = 2;
-              else 
-                  TD20_Energia(in,id) = 1;
-              end
-           end
-       end 
-   end
-end
-
-%%
-%% Energia y Potencia 3.0TD 6.1TD 6.2TD, ...
-%
-% P1
-% P2 
-% P3 
-% P4 
-% P5 
-% P6
-
-TD60_Poten = zeros(24,ndays);
-
-%
-for id = 1:ndays
-   for in = 1:24
-       fin_de_semana = ismember(weekday(alldays(id)),[7 1]);
-       festivo = ismember(alldays(id),festivos);
-       
-       type_of_mo = [];
-       if ismember(alldays(id).Month,[1 2 7 12])
-            type_of_mo = 'ALTA';
-       elseif ismember(alldays(id).Month,[3 11])
-            type_of_mo = 'MEDIA_ALTA';
-       elseif ismember(alldays(id).Month,[6 8 9])
-            type_of_mo = 'MEDIA';
-       elseif  ismember(alldays(id).Month,[4 5 10])
-            type_of_mo = 'BAJA';
-       end
-       
-       
-       if (fin_de_semana ||festivo)
-           TD60_Poten(in,id) = 6;
-       else
-           if in <= 8
-              TD60_Poten(in,id) = 6;
-           else
-
-              if ismember(in,[10:14 19:22])
-                    switch type_of_mo
-                        case 'ALTA'
-                            TD60_Poten(in,id) = 1;
-                        case 'MEDIA_ALTA'
-                            TD60_Poten(in,id) = 2;
-                        case 'MEDIA'
-                            TD60_Poten(in,id) = 3;
-                        case 'BAJA'
-                            TD60_Poten(in,id) = 4;
-                    end
-              elseif  ismember(in,[9 15:18 23 24])
-                    switch type_of_mo
-                        case 'ALTA'
-                            TD60_Poten(in,id) = 2;
-                        case 'MEDIA_ALTA'
-                            TD60_Poten(in,id) = 3;
-                        case 'MEDIA'
-                            TD60_Poten(in,id) = 4;
-                        case 'BAJA'
-                            TD60_Poten(in,id) = 5;
-                    end
-              end
-           end
-       end
-   end 
-end
+year = "2016";
+TD20_Potencia   = TD20_power_calendar(year);
+TD20_Energia    = TD20_energy_calendar(year);
+TD60_Power      = TDXX_P6_energy_calendar(year);
 
 
 %%
-[~,weekday_all] = weekday(alldays,'local');
-%
-Table_all_weekday = table(weekday_all,'VariableNames',{'Day'});
+TD20_Potencia_tabla  = Matrix2Table_calendar(TD20_Potencia,year);
+TD20_Energia_tabla   = Matrix2Table_calendar(TD20_Energia,year);
+TD60_Poten_tabla     = Matrix2Table_calendar(TD60_Power,year);
 
 %%
-name_vars = [repmat('T-',24,1),num2str((0:23)','%.2d'),repmat('-',24,1),num2str(1+(0:23)','%.2d')];
-name_vars = arrayfun(@(i)name_vars(i,:),1:24,'UniformOutput',0);
-%
-Table_all_days = array2table(alldays','VariableNames',{'Date'});
-%%
-TD60_Poten_tabla = array2table(TD60_Poten','VariableNames',name_vars);
-TD60_Poten_tabla = [Table_all_days,Table_all_weekday, TD60_Poten_tabla];
 
 writetable(TD60_Poten_tabla,'csv/3.0TD-6.1TD-Potencia-Energia.csv')
-%%
-TD20_Energia_tabla = array2table(TD20_Energia','VariableNames',name_vars);
-TD20_Energia_tabla = [Table_all_days,Table_all_weekday, TD20_Energia_tabla];
-
 writetable(TD20_Energia_tabla,'csv/2.0TD-Energia.csv')
-%%
-TD20_Potencia_tabla = array2table(TD20_Potencia','VariableNames',name_vars);
-TD20_Potencia_tabla = [Table_all_days,Table_all_weekday, TD20_Potencia_tabla];
-
 writetable(TD20_Potencia_tabla,'csv/2.0TD-Potencia.csv')
+
 %% Energia y Potencia
 fig1 = figure('unit','norm','pos',[0 0 1 1]);
 
-ndays = 365;
-surf((0:23),alldays( 1:ndays),TD60_Poten_tabla{1:ndays,3:end});view(0,-90)
+surf((0:23),TD60_Poten_tabla.Date(1:ndays),TD60_Poten_tabla{1:ndays,3:end});view(0,-90)
 xlabel('hours')
 colormap('jet')
 xlim([0 23])
@@ -183,8 +42,7 @@ colormap([1 0 0;
 
  %% Energia
 fig2 = figure('unit','norm','pos',[0 0 1 1]);
-ndays = 365;
-surf(0:23,alldays( 1:ndays),TD20_Energia_tabla{1:ndays,3:end});view(0,-90)
+surf(0:23,TD20_Energia_tabla.Date( 1:ndays),TD20_Energia_tabla{1:ndays,3:end});view(0,-90)
 xlabel('hours')
 colormap('jet')
 xlim([0 23])
@@ -198,9 +56,8 @@ colormap([1 0 0;
  title('Energia 2.0TD')
  print(fig2,'img/2.0TD-Energia.png','-dpng')
  %% Potencia
- ndays = 365;
 fig3 = figure('unit','norm','pos',[0 0 1 1]);
-surf(0:23,alldays( 1:ndays),TD20_Potencia_tabla{1:ndays,3:end});view(0,-90)
+surf(0:23,TD20_Potencia_tabla.Date( 1:ndays),TD20_Potencia_tabla{1:ndays,3:end});view(0,-90)
 xlabel('hours')
 colormap('jet')
 xlim([0 23])
