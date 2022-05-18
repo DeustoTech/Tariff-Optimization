@@ -60,3 +60,7 @@ bar([monthly_data.DateTime],[monthly_data.energy])
 title('Monthly  Total Energy(kWh)')
 grid on
 xticks(ip.Parent.XTick(1:end-1))
+
+%%
+figure(2)
+Plot_Profile_P2(TD60_Power_list,OptPower.Potencia_de_contratacion_opt)
