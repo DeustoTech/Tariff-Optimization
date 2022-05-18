@@ -1,4 +1,4 @@
-function TD60_Poten = TDXX_P6_energy_calendar(year)
+function [TD60_Poten] = TDXX_P6_energy_calendar(year)
 
 
 

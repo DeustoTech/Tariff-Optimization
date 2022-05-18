@@ -5,7 +5,8 @@ r = webread("https://holidayapi.com/v1/holidays?pretty&key=3b3f26d6-e02e-4515-8e
 
 festivos = arrayfun(@(i) datetime(r.holidays(i).date,'Format','yyyy/MM/dd'),1:length(r.holidays))';
 catch
-    festivos = datetime("01-Jan-"+year);
+    festivos = [datetime("01-Jan-"+year) ...
+                datetime("25-Dec-"+year) ];
 end
 
 end
