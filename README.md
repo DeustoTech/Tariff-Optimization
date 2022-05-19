@@ -49,3 +49,48 @@ En el fichero `compiler` se encuentran las instrucciones para compilar esta func
 
 https://es.mathworks.com/help/compiler/standalone-applications.html
 
+
+# Generacion de calendario de tarifa
+
+Si no tenemos el precio horario de la energía en el año de interes, podemos generar un calendario solo definiendo el precio de la energía por periodo. Este se ejecuta de la siguiente manera en la consola de comandos de MATLAB
+``` matlab
+jsonfile = 'data/json/input_energy_calendar.json'
+>> gen_energy_hourly_price_P2_json(jsonfile)
+```
+Donde `data/json/input_energy_calendar.json` tiene el siguiente formato:
+```
+>> type data/json/input_energy_calendar.json
+```
+
+```json
+{"energy_list_P2":[0.1,0.05,0.01],"year":2013}
+>> 
+```
+
+Parámetros 
+- energy_list_P2: Lista de precios de la energía para los periodos P1 (punta), P2(llano) ,P3(valle) en [€/MWh]
+- year: Año en el que se quiere generar el calendario de precios
+
+La ejecución de este programa genera un fichero .csv llamado `energy_price_table.csv` con el siguiente formato:
+
+```matlab
+>> !more energy_price_table.csv
+
+DateTime,price
+
+01-Jan-2013 00:00:00,0.01
+
+01-Jan-2013 01:00:00,0.01
+
+01-Jan-2013 02:00:00,0.01
+
+01-Jan-2013 03:00:00,0.01
+
+01-Jan-2013 04:00:00,0.01
+
+01-Jan-2013 05:00:00,0.01
+
+01-Jan-2013 06:00:00,0.01
+
+01-Jan-2013 07:00:00,0.01
+```
