@@ -40,7 +40,7 @@ A continuación se muestra la potencia máxima  de contratación para el periodo
 
 Dado estos parámetros y el precio de la energía podemos calcular el costo total diario y mensual
 
-<img src="https://user-images.githubusercontent.com/41575404/168993012-0121fd28-9928-4cdc-9fd3-f16df5e97605.png" width="600">
+<img width="600" alt="Screenshot 2022-05-19 at 08 32 25" src="https://user-images.githubusercontent.com/41575404/169225695-051302fd-6043-4ce3-99fe-e2e99000a4b8.png">
 
 
 # Ejecucion fuera de MATLAB
