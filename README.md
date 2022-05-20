@@ -1,3 +1,14 @@
+# Contenido
+
+En esta librería hay una función de MATLAB para el cálculo de las potencias máximas a contratar además de una simulación del coste de la energía y una estimación de facturas mensuales. Para la ejecución de este algoritmo es necesario lo siguiente:
+
+- Perfil de carga anual con una frecuencia de muestreo horario [en kW]
+- Precio de la energía [€/MWh] a lo largo de timestamp de la curva de carga
+- Precio de la potencia [kW/€/h]
+
+En este repositorio se encuentra un historico de precios de la energía, sin embargo si se quiere realizar ejecuciones de este algoritmo fuera del rango de los datos, se puede generar un perfil de precio anuales. Este es una función de este repositorio que dado un precio de la energía para cada tramo horario (punta, llano y valle), además del año en el que queremos estos precios, generamos la curva de precios en el formato requerido para la ejecución del algoitmo anterior.
+
+
 # Optimización de Tarifa
 
 En este repositorio se presenta dos funciones principales para el cálculo de potencia de contratación óptimas, dado un perfil de carga anual con una frecuencia de muestreo horaria. 
