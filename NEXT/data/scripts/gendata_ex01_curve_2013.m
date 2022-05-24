@@ -25,7 +25,7 @@ opts = setvaropts(opts, "fecha", "WhitespaceRule", "preserve");
 opts = setvaropts(opts, "fecha", "EmptyFieldRule", "auto");
 
 % Import the data
-ex01 = readtable("/Users/djoroya/Dropbox/My Mac (Deyviss’s MacBook Pro)/Documents/GitHub/projects/AGRO-SOFC/Tariff-Optimization/data/ex01.csv", opts);
+ex01 = readtable("data/mat/ex01.csv", opts);
 
 ex01(1,:) = [];
 

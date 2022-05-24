@@ -2,7 +2,7 @@
 
 clear
 
-InitDates = datetime('01-Jan-2019'):days(20):datetime('01-Apr-2022');
+InitDates = datetime('01-Jan-2014'):days(20):datetime('01-May-2022');
 
 %%
 figure(6)
@@ -48,7 +48,7 @@ all_price_table(diff(all_price_table.DateTime) == 0,:) = [];
 
 %%
 
-save('data/price_energy','all_price_table')
+save('data/mat/price_energy','all_price_table')
 
 %% 
 load('data/price_energy')

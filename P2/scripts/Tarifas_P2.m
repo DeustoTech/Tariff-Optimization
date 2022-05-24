@@ -8,8 +8,7 @@ price_table_hourly  = 'data/json/price_table_2013.csv';
 price_table_hourly = 'energy_price_table.csv';
 load_curve_csv      = 'data/csv/ex01_2013.csv';
 input_json          = 'data/json/input_P2.json';
-
-
+%
 compute_tarrif_P2(load_curve_csv,price_table_hourly,input_json);
 %
 
