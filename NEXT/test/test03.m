@@ -27,9 +27,8 @@ iET_2 = genHistoricalEnergyPrice(iET_2);
 %%
 plot(iET_2.DateTime,iET_2.PriceEnergy)
 %%
-
-iET_2.PowerTerms = [300 100];
-iET_2.PowerPrices = 1e-1*[3 2];
+iET_2.PowerTerms  = [300 100];      %
+iET_2.PowerPrices = 1e-1*[3 2];     % 
 
 %%
 ibill = MonthlyBill(iLC_1,iET_2);
@@ -42,11 +41,20 @@ optPowerTerms = ComputeOptimalPowerTerms(ibill);
 ibill.ElectricityTariff.PowerTerms = optPowerTerms;
 %%
 ibill = compute(ibill);
-
+%%
 clf
 bar(ibill.DateTime,[ibill.Total ...
                     ibill.TotalPower ...
                     ibill.FixedPower ...
                     ibill.Energy ...
                     ibill.PowerPenalization])
-legend('Total','Total Power','Fixed Power','Energy','PowerPenalization')
+legend('Total','Total Power','Fixed Power','Total Energy','Power Penalization')
+ylabel('Cost (€)')
+%%
+clf
+bar(ibill.DateTime,[ibill.Total ...
+                    ibill.TotalPower ...
+                    ibill.Energy])
+legend('Total','Total Power','Total Energy')
+ylabel('Cost (€)')
+grid on

@@ -25,9 +25,9 @@ iLC_minus_sat = nonNegative(iLC_minus);
 sty = {'LineWidth',2,'Marker','o'};
 figure(1)
 clf
-plot(iLC_1,sty{:})
+plot(iLC_1,sty{:},'LineWidth',4)
 hold on
-plot(iLC_2,sty{:})
+plot(iLC_2,sty{:},'LineWidth',4)
 plot(iLC_sum,sty{:})
 plot(iLC_minus,sty{:})
 plot(iLC_minus_sat,sty{:})

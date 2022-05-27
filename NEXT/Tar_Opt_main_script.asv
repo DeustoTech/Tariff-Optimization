@@ -20,7 +20,7 @@ iET_1 = generateElectricityTariff(iLC_1,np);
 iET_1.PowerTerms  = [300 100];      %
 iET_1.PowerPrices = 1e-1*[3 2];     % 
 %iET_1 = genHistoricalEnergyPrice(iET_1);
-iET_1.PriceEnergy = 1 +zeros(8737,1);
+iET_1.PriceEnergy = 1 zeros(8737,1);
 %%
 ibill = MonthlyBill(iLC_1,iET_1);
 %%
