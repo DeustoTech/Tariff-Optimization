@@ -2,7 +2,7 @@
 % Comprobamos que los construtores funcionan ademas de la suma
 %%
 clear
-load('NEXT/data/mat/ex01_2013')
+load('data/mat/ex01_2013')
 %%
 Power_1 = load_curve_2013.Power(1:100);
 DateTime_1 = load_curve_2013.DateTime(1:100);
