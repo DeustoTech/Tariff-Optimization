@@ -2,7 +2,7 @@
 
 clear
 
-InitDates = datetime('01-Jan-2014'):days(20):datetime('01-Jul-2022');
+InitDates = datetime('01-Jan-2020'):days(20):datetime('01-Sep-2022');
 %InitDates = datetime('01-Jan-2022'):days(20):datetime('01-May-2022');
 
 %%
@@ -10,7 +10,8 @@ figure(6)
 clf
 hold on
 ylabel('€/MWh')
-
+opt = weboptions;
+opt.Timeout = 15;
 for j = 1:length(InitDates)-1
 
 InitDate = InitDates(j);
@@ -20,7 +21,7 @@ r = webread("https://apidatos.ree.es/es/datos/mercados/precios-mercados-tiempo-r
                 datestr(InitDate,'yyyy-mm-ddThh:MM')+ ...
                 "&end_date=" + ...
                 datestr(EndDate,'yyyy-mm-ddThh:MM') + ...
-                "&time_trunc=hour");
+                "&time_trunc=hour",opt);
 if length(r.included)>1
     r.included(2)
     data = r.included(2).attributes.values;

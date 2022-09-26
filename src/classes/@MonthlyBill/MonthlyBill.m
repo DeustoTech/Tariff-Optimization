@@ -49,8 +49,9 @@ classdef MonthlyBill
             %%
             
             %%
+            % CORREGIR - DIFERENCIAR ENTRE MESES DE DIFERENTES ANOS
             months_list = unique(month(ET.DateTime));
-            
+            months_list = unique(month(ET.DateTime)+"-"+year(ET.DateTime));
             EnergyCostHourly = 1e-3*ET.PriceEnergy.*LC.Power;
             
             EnergyBillMonthly = zeros(length(months_list),1);
@@ -60,10 +61,18 @@ classdef MonthlyBill
             RealPowerTerm = zeros(length(months_list),ET.np);
             for imonth = months_list
                 iter = iter + 1;
+                imonth =  split("1-2022",'-');
+                iyear = str2num(imonth{2});
+                imonth = str2num(imonth{1});
                 EnergyBillMonthly(iter)  = sum(EnergyCostHourly( LC.DateTime.Month == imonth));
                 for ip = 1:ET.np
-                    id_b = logical((LC.DateTime.Month == imonth).*(ET.PowerPeriod == ip));
+                    id_y = (LC.DateTime.Year == iyear);
+                    id_m = (LC.DateTime.Month == imonth);
+                    id_b = logical(id_m.*id_y.*(ET.PowerPeriod == ip));
+                    if sum(id_b) == 0
+                    else
                     RealPowerTerm(iter,ip) = max(LC.Power( id_b));
+                    end
                 end
             end
             %%
@@ -76,6 +85,10 @@ classdef MonthlyBill
             obj.TotalPower   = PowerBill.cost + penalization_bill.cost;
             obj.Energy  = EnergyBillMonthly;
             obj.DateTime    = PowerBill.DateTime;
+            for jj = 1:length(obj.DateTime)
+                    obj.DateTime(jj).Day = 1;
+            end
+
             obj.Total        = obj.TotalPower + obj.Energy;
         end
         
