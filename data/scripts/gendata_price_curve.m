@@ -2,7 +2,8 @@
 
 clear
 
-InitDates = datetime('01-Jan-2014'):days(20):datetime('01-May-2022');
+InitDates = datetime('01-Jan-2014'):days(20):datetime('01-Jul-2022');
+%InitDates = datetime('01-Jan-2022'):days(20):datetime('01-May-2022');
 
 %%
 figure(6)
@@ -20,7 +21,13 @@ r = webread("https://apidatos.ree.es/es/datos/mercados/precios-mercados-tiempo-r
                 "&end_date=" + ...
                 datestr(EndDate,'yyyy-mm-ddThh:MM') + ...
                 "&time_trunc=hour");
-data = r.included(1).attributes.values;
+if length(r.included)>1
+    r.included(2)
+    data = r.included(2).attributes.values;
+else
+    r.included(1)
+    data = r.included(1).attributes.values;
+end
 %%
 DateTime = vertcat(data.datetime);
 DateTime(:,11) = ' ';
@@ -51,14 +58,14 @@ all_price_table(diff(all_price_table.DateTime) == 0,:) = [];
 save('data/mat/price_energy','all_price_table')
 
 %% 
-load('data/price_energy')
+load('data/mat/price_energy')
 price_table_2013 = all_price_table;
 price_table_2013.DateTime = price_table_2013.DateTime - years(8);
 
 price_table_2013(diff(price_table_2013.DateTime) == 0,:) = [];
 
-save('data/price_table_2013','price_table_2013')
+save('data/mat/price_table_2013','price_table_2013')
 
-writetable(price_table_2013,'data/price_table_2013.csv')
+writetable(price_table_2013,'data/csv/price_table_2013.csv')
 
 
