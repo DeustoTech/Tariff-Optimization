@@ -50,8 +50,8 @@ classdef MonthlyBill
             
             %%
             % CORREGIR - DIFERENCIAR ENTRE MESES DE DIFERENTES ANOS
-%             months_list = unique(month(ET.DateTime));
-            months_list = unique(month(ET.DateTime)+"-"+year(ET.DateTime),'stable');
+            months_list = unique(month(ET.DateTime));
+            months_list = unique(month(ET.DateTime)+"-"+year(ET.DateTime));
             EnergyCostHourly = 1e-3*ET.PriceEnergy.*LC.Power;
             
             EnergyBillMonthly = zeros(length(months_list),1);
@@ -65,7 +65,6 @@ classdef MonthlyBill
                 iyear = str2num(imonth{2});
                 imonth = str2num(imonth{1});
                 EnergyBillMonthly(iter)  = sum(EnergyCostHourly( LC.DateTime.Month == imonth));
-
                 for ip = 1:ET.np
                     id_y = (LC.DateTime.Year == iyear);
                     id_m = (LC.DateTime.Month == imonth);
