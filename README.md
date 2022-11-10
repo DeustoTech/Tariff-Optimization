@@ -105,3 +105,6 @@ DateTime,price
 
 01-Jan-2013 07:00:00,0.01
 ```
+
+```
+sh run_P2json.sh /Applications/MATLAB/MATLAB_Runtime/v910/ 'data/csv/load_curves/ex01_2013.csv' '300  100' '0.3 0.2' 'out.json'
