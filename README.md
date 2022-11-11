@@ -47,7 +47,7 @@ Por último selecionamos el nombre del fichero de salida
 ```matlab
 out = 'out.json'; 
 ```
- 
+Ejecutamos el algoritmo llamando a la función `P2json`
 ```matlab
 results = P2json(nfile_csv,c_PT,PPP,out);
 ```
@@ -79,11 +79,15 @@ results
 
 ```
 
-Para ver el resultado del algoritmo escribimos en una consola de bash
+Además esta función habrá creado un fichero con el nombre dicho.  Para ver el resultado del algoritmo escribimos en una consola de bash
 ```bash
 !cat out.json
 ```
-
+En windows 
+```
+type out.json
+```
+El resultado será:
 ```json
 {
   "current": 
