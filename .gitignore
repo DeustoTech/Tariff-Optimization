@@ -5,3 +5,11 @@
 */*/for_testing/*
 *.DS_Store
 TEST_WS.mat
+compiled/P2json.app/
+compiled/ex01_2013.csv
+compiled/mccExcludedFiles.log
+compiled/out.json
+compiled/requiredMCRProducts.txt
+compiled/run_P2json.sh
+compiled/unresolvedSymbols.txt
+*.asv
