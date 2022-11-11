@@ -2,6 +2,9 @@ function results = P2json(name_file_csv,current_power_terms,price_power_periods,
 %%
     load_curve_ = readtable(name_file_csv);
 
+    price_power_periods = str2num(price_power_periods);
+    current_power_terms = str2num(current_power_terms);
+
     %%
     %%
     Power_1 = load_curve_.Power;
