@@ -13,3 +13,4 @@ compiled/requiredMCRProducts.txt
 compiled/run_P2json.sh
 compiled/unresolvedSymbols.txt
 *.asv
+*.asv
